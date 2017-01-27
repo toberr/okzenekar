@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>\{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
@@ -32,14 +32,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "../../sass/common";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $green;
   margin-top: 60px;
+
+  h1, h2{
+    background: $green;
+    color: white;
+  }
 }
 
 h1, h2 {
@@ -57,6 +63,6 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: $green;
 }
 </style>

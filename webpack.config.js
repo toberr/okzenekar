@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var path = require('path');
 
 module.exports = {
@@ -25,11 +26,31 @@ module.exports = {
           loader: 'vue-loader',
           options: {
             loaders: {
-              // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-              // the "scss" and "sass" values for the lang attribute to the right configs here.
-              // other preprocessors should work out of the box, no loader config like this nessessary.
-              'scss': 'vue-style-loader!css-loader!sass-loader',
-              'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+              scss: ExtractTextPlugin.extract({
+                loader: [
+                  {
+                    loader: 'css-loader',
+                    options: {
+                      sourceMap: true
+                    }
+                  },
+                  {
+                    loader: 'sass-loader',
+                    options: {
+                      outputStyle: 'expanded',
+                      sourceMap: true,
+                      sourceMapContents: true
+                    }
+                  }
+                ],
+                fallbackLoader: 'vue-style-loader'
+              })
+              //,
+              //'scss': [
+              //  'vue-style-loader', 
+              //  'css-loader', 
+              //  'sass-loader'
+              //]
             }
           }
         }]
@@ -43,6 +64,7 @@ module.exports = {
     new webpack.SourceMapDevToolPlugin({
       filename: '[file].map',
       exclude: 'vendor'
-    })
+    }),
+    new ExtractTextPlugin('../css/[name].css')
   ]
 }
