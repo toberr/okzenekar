@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run dev",
     "predev": "rm -rf dist/*",
-    "dev": "parallelshell 'npm run html' 'npm run webpack:watch' 'npm run browser-sync'",
-    "webpack": "node_modules/.bin/webpack --config webpack.config.js",
-    "webpack:watch": "node_modules/.bin/webpack -w --config webpack.config.js",
-    "browser-sync": "./node_modules/browser-sync/bin/browser-sync.js start --port 3000 --server 'dist' --files 'dist, !dist/css/*.map'",
+    "dev": "parallelshell 'npm run html' 'npm run webpack:dev' 'npm run browser-sync'",
+    "webpack:dev": "cross-env NODE_ENV=development webpack",
+    "webpack:prod": "cross-env NODE_ENV=production webpack",
+    "browser-sync": "browser-sync start --port 3000 --server 'dist' --files 'dist, !dist/css/*.map'",
     "html": "cp src/template/index.html dist/index.html"
   },
   "author": "",
