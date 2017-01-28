@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
-    "predev": "rm -rf dist/*",
+    "predev": "rm -rf dist && mkdir dist",
     "dev": "parallelshell 'npm run html' 'npm run webpack:dev' 'npm run browser-sync'",
+    "preprod": "rm -rf dist && mkdir dist",
+    "prod": "parallelshell 'npm run html' 'npm run webpack:prod'",
     "webpack:dev": "cross-env NODE_ENV=development webpack -w",
     "webpack:prod": "cross-env NODE_ENV=production webpack",
     "browser-sync": "browser-sync start --port 3000 --server 'dist' --files 'dist, !dist/css/*.map'",
