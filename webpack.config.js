@@ -59,7 +59,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         query: {
-          name: 'temp/[name].[ext]?[hash]'
+          name: '[path][name].[ext]?[hash]'
         }
       }
     ]
@@ -70,11 +70,10 @@ module.exports = {
     }),
   ],
   resolve: {
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
-      'dist': path.resolve(__dirname, 'dist'),
       'assets': path.resolve(__dirname, 'src', 'assets'),
-      'components': path.resolve(__dirname, 'src', 'components')
     }
   },
   devServer: {
@@ -91,7 +90,7 @@ if (PROD) {
   // http://vue-loader.vuejs.org/en/workflow/production.html
 
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new ExtractTextPlugin('./static/css/[name].css'),
+    new ExtractTextPlugin('./src/assets/css/[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'

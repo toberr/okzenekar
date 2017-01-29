@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import pageHeader from './page-header.vue'
-import pageFooter from './page-footer.vue'
-import pageContent from './page-content.vue'
+import pageHeader from 'components/page-header.vue'
+import pageFooter from 'components/page-footer.vue'
+import pageContent from 'components/page-content.vue'
 
 export default {
   name: 'app',
