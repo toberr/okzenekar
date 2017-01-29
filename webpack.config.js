@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 var PROD = process.env.NODE_ENV === 'production';
 var scssLoader = PROD
@@ -58,7 +59,7 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
-        query: {
+        options: {
           name: '[path][name].[ext]?[hash]'
         }
       }
@@ -68,6 +69,11 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor' 
     }),
+    new HtmlWebpackPlugin({
+      //inject: false,
+      filename: 'index.html',
+      template: path.resolve(__dirname, 'src', 'template', 'index.html')
+    })
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
@@ -82,7 +88,7 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#source-map' //#eval-source-map
 }
 
 if (PROD) {
