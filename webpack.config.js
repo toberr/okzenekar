@@ -4,31 +4,6 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 var PROD = process.env.NODE_ENV === 'production';
-var scssLoader = PROD
-    ? ExtractTextPlugin.extract({
-        loader: [
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              outputStyle: 'expanded',
-              sourceMap: true,
-              sourceMapContents: true
-            }
-          }
-        ],
-        fallbackLoader: 'vue-style-loader'
-      })
-    : [
-        'vue-style-loader',
-        'css-loader?sourceMap',
-        'sass-loader?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
-      ]
 
 module.exports = {
   entry: {
@@ -37,6 +12,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
+    publicPath: PROD ? 'assets/' : '/',
     filename: '[name].js'
   },
   module: {
@@ -46,7 +22,32 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            'scss': scssLoader
+            'scss': (() => PROD 
+              ? ExtractTextPlugin.extract({
+                  loader: [
+                    {
+                      loader: 'css-loader',
+                      options: {
+                        sourceMap: true
+                      }
+                    },
+                    {
+                      loader: 'sass-loader',
+                      options: {
+                        outputStyle: 'expanded',
+                        sourceMap: true,
+                        sourceMapContents: true
+                      }
+                    }
+                  ],
+                  fallbackLoader: 'vue-style-loader'
+                })
+              : [
+                  'vue-style-loader',
+                  'css-loader?sourceMap',
+                  'sass-loader?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
+                ]
+            )()
           }
           // other vue-loader options go here
         }
@@ -96,7 +97,7 @@ if (PROD) {
   // http://vue-loader.vuejs.org/en/workflow/production.html
 
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new ExtractTextPlugin('./src/assets/css/[name].css'),
+    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'

@@ -1,6 +1,7 @@
 <template>
   <div id="content">
-    <img src="~assets/img/logo.png" />
+    <img src="~assets/img/sub/logo.png" />
+    <div class="bg"></div>
     <h1>{{ message }}</h1>
   </div>
 </template>
@@ -31,9 +32,17 @@
       color: #42b983;
       font-weight: normal;
     }
+
+    .bg{
+      margin: 0 auto;
+      width: 200px;
+      height: 200px;
+      background: transparent url(~assets/img/sub/logo.png) no-repeat center center;
+    }
+
+    a {
+      color: #42b983;
+    }
   }
 
-  a {
-    color: #42b983;
-  }
 </style>
