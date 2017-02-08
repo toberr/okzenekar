@@ -52,11 +52,12 @@ console.log(fileList);
 fileList.forEach(function (file, i) {
 
   if (new RegExp('\\.' + staticFilePattern + '$').test(file)){
-    fs.copySync(file, file.replace('src/assets', 'assets').replace('dist', 'test'));
+    fs.copySync(file, file.replace('src/assets', 'assets').replace('dist', 'dist2'));
   } else {
     var content = getContent(file),
         fileName = getFileName(file);
-    fs.outputFileSync(fileName.replace('dist', 'test'), content);
+    fs.outputFileSync(fileName.replace('dist', 'dist2'), content);
   }
 });
-//fs.removeSync('dist/src');
+//fs.removeSync('dist');
+//fs.renameSync('dist2', 'dist');
