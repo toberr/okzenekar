@@ -3,6 +3,7 @@
     <img src="~assets/img/sub/logo.png" />
     <div class="bg"></div>
     <h1>{{ message }}</h1>
+    <router-view></router-view>
   </div>
 </template>
 
