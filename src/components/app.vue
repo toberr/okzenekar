@@ -21,12 +21,6 @@ export default {
   created () {
     console.log('created 123');
   },
-  mounted () {
-      document.addEventListener('vue-post-render', function () {
-        console.log('custom event captured');
-      })
-      document.dispatchEvent(new Event('vue-post-render'))
-  },
   components: {
     pageHeader,
     pageFooter,

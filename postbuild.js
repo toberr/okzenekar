@@ -22,21 +22,17 @@ var staticFilePattern = '(png|jpg|gif|svg|ttf|woff)',
       var temp = fs.readFileSync(file, 'utf8'),
           pairs = [
             {
-              pattern: /assets\/([a-z-0-9-_]*?)\.js/gmi,
-              replacement: 'assets/js/$1.js'
+              pattern: /\/([a-z-0-9-_]*?)\.js/gmi,
+              replacement: '/assets/js/$1.js'
             },
             {
-              pattern: /assets\/([a-z-0-9-_]*?)\.css/gmi,
-              replacement: 'assets/css/$1.css'
+              pattern: /\/([a-z-0-9-_]*?)\.css/gmi,
+              replacement: '/assets/css/$1.css'
             },
             {
-              pattern: /assets\/src\/assets/gmi,
-              replacement: '/assets'
-            },
-            {
-              pattern: /src\/assets\//gmi,
-              replacement: ''
-            },
+              pattern: /src\/assets/gmi,
+              replacement: 'assets'
+            }
           ]
 
           pairs.forEach(function (item) {

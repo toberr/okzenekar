@@ -13,7 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: PROD ? '/' : '/',
+    publicPath: '/',
     filename: '[name].js'
   },
   module: {
@@ -119,7 +119,7 @@ if (PROD) {
       // List of routes to prerender
       [ '/', '/foo', '/bar' ],
       {
-        captureAfterTime: 1000,
+        captureAfterTime: 5000,
         captureAfterDocumentEvent: 'vue-post-render'
       }
     )
