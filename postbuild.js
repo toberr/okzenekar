@@ -42,7 +42,7 @@ var staticFilePattern = '(png|jpg|gif|svg|ttf|woff)',
           return temp;
     };
 
-console.log(fileList);
+//console.log(fileList);
 
 // remove src/ from the paths and the file contents
 fileList.forEach(function (file, i) {
@@ -55,5 +55,5 @@ fileList.forEach(function (file, i) {
     fs.outputFileSync(fileName.replace('dist', 'dist2'), content);
   }
 });
-//fs.removeSync('dist');
-//fs.renameSync('dist2', 'dist');
+fs.removeSync('dist');
+fs.renameSync('dist2', 'dist');

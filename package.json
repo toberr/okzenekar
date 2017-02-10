@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --host 0.0.0.0 --inline --hot",
-    "build": "rm -rf ./dist && rm -rf ./dist2 && cross-env NODE_ENV=production webpack --progress --hide-modules && node postbuild"
+    "build": "rm -rf ./dist && rm -rf ./dist2 && cross-env NODE_ENV=production webpack --progress --hide-modules && node postbuild",
+    "build-demo": "browser-sync start --port 3000 --server dist"
   },
   "dependencies": {
     "vue": "^2.1.0"
