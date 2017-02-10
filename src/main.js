@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import App from 'components/App.vue'
+import app from 'components/app.vue'
 
 Vue.use(VueRouter)
 
@@ -19,8 +19,10 @@ const router = new VueRouter({
   routes: routes
 })
 
-new Vue({
-  el: '#app',
+const root = new Vue({
   router: router,
-  render: h => h(App)
+  render: h => h(app)
 })
+
+root.$mount('#app')
+
