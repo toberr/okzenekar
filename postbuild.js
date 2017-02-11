@@ -1,5 +1,6 @@
 var globby = require('globby');
 var fs = require('fs-extra');
+var beautifyHtml = require('js-beautify').html
 
 var staticFilePattern = '(png|jpg|gif|svg|ttf|woff)',
     fileList = globby.sync([
@@ -52,6 +53,10 @@ fileList.forEach(function (file, i) {
   } else {
     var content = getContent(file),
         fileName = getFileName(file);
+
+      if (/\.html$/.test(file)){
+        content = beautifyHtml(content, {"indent_size": 2});
+      }
     fs.outputFileSync(fileName.replace('dist', 'dist2'), content);
   }
 });

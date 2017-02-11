@@ -35,7 +35,7 @@
     nav{
       a{
         display: inline-block;
-        margin: 0 2px 0 5px;
+        margin: 0 5px 0 5px;
         padding: 3px;
         color: #42b983;
         &.router-link-active{
