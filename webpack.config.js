@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var PrerenderSpaPlugin = require('prerender-spa-plugin')
+var routes = require('./src/router');
 
 var PROD = process.env.NODE_ENV === 'production';
 
@@ -15,7 +16,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: '[name].js',
-    chunkFilename: '[name].chunk.js',
+    chunkFilename: '[name]/[name].chunk.js',
   },
   module: {
     rules: [
@@ -113,12 +114,12 @@ if (PROD) {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new PrerenderSpaPlugin(
+    })
+    , new PrerenderSpaPlugin(
       // Absolute path to compiled SPA
       path.join(__dirname, 'dist'),
       // List of routes to prerender
-      [ '/', '/foo', '/bar' ],
+      routes.map(x => x.path),
       {
         captureAfterTime: 5000,
         captureAfterDocumentEvent: 'vue-post-render'

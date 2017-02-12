@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  name: 'about'
+  name: 'about',
+  created () {
+  	console.log('about page created');
+  }
 }
 </script>
 

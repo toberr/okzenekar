@@ -23,4 +23,4 @@ var routes = [
 
 //console.log(routes);
 
-export default routes
+module.exports = routes
