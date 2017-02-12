@@ -8,13 +8,14 @@ var PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: {
-    main: './src/main.js',
-    vendor: ['vue']
+    vendor: ['vue'],
+    main: './src/main.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
   },
   module: {
     rules: [
@@ -69,7 +70,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor' 
+      names: ['vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       //inject: false,

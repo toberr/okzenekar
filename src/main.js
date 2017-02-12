@@ -1,8 +1,9 @@
+require('es6-promise').polyfill();
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import app from './components/app.vue'
 import routes from './router'
-
 
 Vue.use(VueRouter)
 

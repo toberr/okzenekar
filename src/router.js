@@ -1,7 +1,6 @@
-import index from './pages/index.vue'
-import about from './pages/about.vue'
-import contact from './pages/contact.vue'
-
+var index = r => require.ensure([], () => r(require('./pages/index.vue')), 'index')
+var about = r => require.ensure([], () => r(require('./pages/about.vue')), 'about')
+var contact = r => require.ensure([], () => r(require('./pages/contact.vue')), 'contact')
 
 var routes = [
   { 
