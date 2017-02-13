@@ -20,6 +20,10 @@ export default {
   },
   created () {
     console.log('created 123');
+    this.eb.$on('test', function (data) {
+      console.log(data);
+    })
+    window.appevent = this.eb;
   },
   components: {
     pageHeader,
