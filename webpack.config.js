@@ -106,12 +106,12 @@ if (PROD) {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
+    //new webpack.optimize.UglifyJsPlugin({
+    //  sourceMap: true,
+    //  compress: {
+    //    warnings: false
+    //  }
+    //}),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

@@ -1,9 +1,8 @@
 <template>
   <div class="header">
-    <div class="decor">header</div>
     <nav>
       <template v-for="route in routes">
-        <router-link :to="route.path" exact>{{route.name}}</router-link>
+        <router-link :to="route.path" exact>{{route.data.linkName}}</router-link>
       </template>
     </nav>
   </div>
