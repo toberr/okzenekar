@@ -20,6 +20,7 @@
           var temp = this.routes.filter(x => [x.path, x.path + '/'].indexOf(hook.path) !== -1 )[0];
           this.$title.innerHTML = temp.data.linkName;
           this.$description.setAttribute('content', temp.data.metaDesc);
+          this.$emit('route-change', temp);
         })
       }
     },

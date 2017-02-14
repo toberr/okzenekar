@@ -2,9 +2,9 @@ require('es6-promise').polyfill();
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import app from './components/app.vue';
-import routes from './router';
-import eb from './components/event-bus';
+import app from 'root/components/app.vue';
+import routes from 'root/router';
+import eb from 'root/components/event-bus';
 
 Vue.use(VueRouter);
 Vue.use(eb);

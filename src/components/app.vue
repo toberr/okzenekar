@@ -1,33 +1,36 @@
 <template>
   <div id="app">
-    <page-navigation></page-navigation>
+    <page-navigation @route-change="routeChange"></page-navigation>
     <page-header></page-header>
+    <page-content :sub-title="subTitle"></page-content>
     <page-contact></page-contact>
-    <page-content></page-content>
     <page-audio></page-audio>
   </div>
 </template>
 
 <script>
-import pageNavigation from 'components/page-navigation.vue'
-import pageHeader from 'components/page-header.vue'
-import pageContact from 'components/page-contact.vue'
-import pageContent from 'components/page-content.vue'
-import pageAudio from 'components/page-audio.vue'
+import pageNavigation from 'root/components/page-navigation.vue';
+import pageHeader from 'root/components/page-header.vue';
+import pageContact from 'root/components/page-contact.vue';
+import pageContent from 'root/components/page-content.vue';
+import pageAudio from 'root/components/page-audio.vue';
 
 export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      subTitle: ''
+    }
+  },
+  methods: {
+    routeChange (e) {
+      this.subTitle = e.data.linkName;
     }
   },
   created () {
-    console.log('created 123');
     this.eb.$on('test', function (data) {
       console.log(data);
     })
-    window.app = this;
   },
   components: {
     pageNavigation,
@@ -40,4 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~root/components/scss/_variables';
+@import '~root/components/scss/_foundation';
+@import '~root/components/scss/_common';
 </style>

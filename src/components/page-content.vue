@@ -1,15 +1,20 @@
 <template>
   <div id="content">
-    <router-view></router-view>
+    <div class="inner">
+      <h2>{{subTitle}}</h2>
+    </div>
+    <router-view :title="test"></router-view>
   </div>
 </template>
 
 <script>
   export default {
     name: 'page-content',
+    props: ['subTitle'],
     data () {
       return {
-        message: 'Welcome to Your Vue.js App'
+        message: 'Welcome to Your Vue.js App',
+        test: 'test'
       }
     },
     created () {
@@ -19,12 +24,5 @@
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: Arial, Helvetica, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
 
 </style>

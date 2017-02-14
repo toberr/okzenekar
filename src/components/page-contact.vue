@@ -3,7 +3,7 @@
     <div class="inner">
       <div class="row">
         <div class="columns small-6 medium-4 desktop-4">
-          <div><img alt="ok zenekar lakodalom party bál eksüvő" src="assets/img/pic_saxo.png"> <img alt="ok zenekar lakodalom party bál eksüvő" src="assets/img/pic_klarinet.png"></div>
+          <div><img alt="ok zenekar lakodalom party bál eksüvő" src="~root/assets/img/pic_saxo.png"> <img alt="ok zenekar lakodalom party bál eksüvő" src="~root/assets/img/pic_klarinet.png"></div>
           <div>
             <h3><span>O</span>berritter Ferenc</h3>
             <p>szaxofon, klarinét, ének</p>
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="columns small-6 medium-4 desktop-4">
-          <div><img alt="ok zenekar lakodalom party bál eksüvő" src="assets/img/pic_harmonika.png"> <img alt="ok zenekar lakodalom party bál eksüvő" src="assets/img/pic_szint.png"></div>
+          <div><img alt="ok zenekar lakodalom party bál eksüvő" src="~root/assets/img/pic_harmonika.png"> <img alt="ok zenekar lakodalom party bál eksüvő" src="~root/assets/img/pic_szint.png"></div>
           <div>
             <h3><span>K</span>rutki Gábor</h3>
             <p>harmonika, szintetizátor, ének</p>
@@ -33,9 +33,86 @@
 </script>
 
 <style lang="scss">
-#contact{
-  border-bottom: 1px solid black;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+@import '~root/components/scss/_variables';
+@import '~root/components/scss/_mixins';
+#contact {
+  margin-bottom: 0.9375rem;
+  clear: both;
+  .inner {
+    .row {
+      margin: 0 0.9375rem;
+      padding: 0.9375rem 0;
+      background: $white;
+      border: 2px solid $black;
+    }
+  }
+  .columns {
+    div {
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-weight: bold;
+      span {
+        color: $red;
+      }
+    }
+    a {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding-left: 40px;
+      position: relative;
+      &:before {
+        content: '';
+        left: 0;
+        @include centerY();
+        height: 32px;
+        width: 32px;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      &:hover:before {
+        background-position: 0 100%;
+      }
+      &.email:before {
+        background-image: url(~root/assets/img/pic_email.png);
+      }
+      &.facebook:before {
+        background-image: url(~root/assets/img/pic_facebook.png);
+      }
+      &.youtube:before {
+        background-image: url(~root/assets/img/pic_youtube.png);
+      }
+    }
+    &:nth-child(2) {
+      div {
+        &:first-child {
+          font-size: 0;
+        }
+        img {
+          max-width: 50%;
+        }
+      }
+    }
+  }
+}
+@media #{$tablet} {
+  #contact {
+    .columns {
+      div {
+        &:first-child {
+          padding-right: 20px;
+          font-size: 0;
+          img {
+            max-width: 50%;
+          }
+        }
+        vertical-align: top;
+        img {
+          display: inline-block;
+        }
+        display: table-cell;
+      }
+    }
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div id="header">
     <nav>
       <template v-for="route in routes">
         <router-link :to="route.path" exact>{{route.data.linkName}}</router-link>
@@ -21,25 +21,151 @@
 </script>
 
 <style lang="scss">
-  .header{
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    text-align: center;
-    border-bottom: 1px solid #000;
-    .decor{
-      padding-bottom: 7px;
-      margin-bottom: 7px;
-      border-bottom: 1px solid #000;
+  @import '../components/scss/_variables';
+  @import '../components/scss/_mixins';
+  #header {
+    display: block;
+    position: relative;
+    background: $black;
+    padding: 50px 10px 0;
+    font-size: 0;
+    margin-bottom: 20px;
+    button.menu {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      left: 10px;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      overflow: hidden;
+      text-indent: -10000px;
+      border-top: 6px solid $gray;
+      border-bottom: 6px solid $gray;
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 6px;
+        transform: translate(0, -50%);
+        background: $gray;
+      }
     }
-    nav{
-      a{
-        display: inline-block;
-        margin: 0 5px 0 5px;
-        padding: 3px;
-        color: #42b983;
-        &.router-link-active{
-          color: white;
-          background: #42b983;
+    nav {
+      overflow: hidden;
+      height: 0;
+      transition: height 0.3s;
+      &.router-link-active {
+        height: auto;
+      }
+      .sub {
+        a:last-child {
+          border-bottom: 1px solid $gray;
+        }
+        span {
+          display: none;
+        }
+      }
+      a {
+        display: block;
+        color: $gray;
+        border-bottom: 1px solid $gray;
+        padding: 10px 0;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 10px 5px;
+        font-size: 16px;
+        line-height: 20px;
+        &:hover {
+          color: $gray;
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+        &.router-link-active {
+          background: $blue;
+        }
+      }
+    }
+
+    @media #{$desktop} {
+      background: none;
+      padding: 0;
+      nav {
+        position: relative;
+        z-index: 2;
+      }
+      h1 {
+        z-index: 1;
+      }
+      h1 {
+        position: relative;
+        margin: 20px 0;
+        color: $black;
+        font-size: 50px;
+        letter-spacing: 2px;
+      }
+      nav {
+        height: auto;
+        padding: 0 10px;
+        text-align: center;
+        background: $black;
+        white-space: nowrap;
+        overflow: visible;
+        .sub {
+          position: relative;
+          span {
+            display: inline-block;
+            cursor: default;
+            padding-right: 20px;
+            position: relative;
+            &:after {
+              content: '';
+              position: absolute;
+              right: 0;
+              top: 3px;
+              width: 0;
+              height: 0;
+              border-left: 7px solid transparent;
+              border-right: 7px solid transparent;
+              border-top: 10px solid $gray;
+            }
+          }
+          .categoryLinks {
+            background: $black;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            visibility: hidden;
+            a {
+              display: block;
+              text-align: left;
+            }
+          }
+          &:hover {
+            .categoryLinks {
+              visibility: visible;
+            }
+          }
+        }
+        a, .sub {
+          display: inline-block;
+          border-bottom: none;
+          padding: 15px;
+          font-size: 16px;
+          line-height: 20px;
+          text-transform: uppercase;
+          color: $gray;
+          &:first-child {
+            margin-top: 0;
+          }
+          &:hover {
+            color: $gray;
+            background: $blue;
+          }
         }
       }
     }
