@@ -9,30 +9,32 @@
         Ha felkeltettük érdeklődéseteket, keressetek telefonon és <a href="mailto:okzenekar@gmail.com">emailen</a>.</p>
       </div>
       <div class="small-12 medium-6 large-6 columns">
-        <div class="slider">
-          <img alt="" class="active" src="~root/assets/img/cycle/gallery_52.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_49.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_00.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_02.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_37.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_18.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_39.jpg"> 
-          <img alt="" src="~root/assets/img/cycle/gallery_01.jpg">
-        </div>
+        <page-slider :images="galleryImages"></page-slider>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import pageSlider from 'root/components/page-slider.vue';
 export default {
   name: 'index',
   props: ['title'],
+  data () {
+    return  {
+      galleryImages: [ 
+        '52', '49', '00', '02', '37', '18', '39', '01' 
+      ].map(x => `/src/assets/img/cycle/gallery_${x}.jpg`)
+    }
+  },
   created () {
   	console.log('index page created');
   	this.eb.$emit('test', {
       message: 'index triggered'
     });
+  },
+  components: {
+    pageSlider
   }
 }
 </script>

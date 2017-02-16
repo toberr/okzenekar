@@ -1,7 +1,6 @@
 <template>
   <div class="partnereink tab">
     <div class="inner">
-      <h2>${data.title}</h2>
       <div class="row">
         <div>
           <div class="eq0">
@@ -160,7 +159,7 @@
 
 <script>
 export default {
-  name: 'about',
+  name: 'partner',
 }
 </script>
 

@@ -570,7 +570,7 @@
 
 <script>
 export default {
-  name: 'about',
+  name: 'repertoire',
 }
 </script>
 

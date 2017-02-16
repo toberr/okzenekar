@@ -23,7 +23,7 @@ export default {
   name: 'gallery',
   data () {
     return {
-      galleryImages: galleryImages
+      galleryImages
     }
   },
   created () {

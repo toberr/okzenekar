@@ -24,5 +24,7 @@
 </script>
 
 <style lang="scss">
-
+  #content {
+    margin-bottom: 15px;
+  }
 </style>
