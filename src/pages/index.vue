@@ -9,7 +9,10 @@
         Ha felkeltettük érdeklődéseteket, keressetek telefonon és <a href="mailto:okzenekar@gmail.com">emailen</a>.</p>
       </div>
       <div class="small-12 medium-6 large-6 columns">
-        <page-slider :images="galleryImages"></page-slider>
+        <page-slider 
+          :images="galleryImages" 
+          :index="0"
+          loop ></page-slider>
       </div>
     </div>
   </div>

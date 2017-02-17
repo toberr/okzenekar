@@ -18,7 +18,9 @@
       <div class="content"><img alt="" src=""></div>
     </div><!-- modal layer end -->
     <modal-layer modal-id="picture">
-      <img alt="" :src="galleryPicture" />
+      <page-slider 
+          :images="bigImages" 
+          :index="currentIndex"></page-slider>
     </modal-layer>
   </div>
 </template>
@@ -26,18 +28,25 @@
 <script>
 import galleryImages from '../generated/gallery-images.json';
 import modalLayer from 'root/components/modal-layer.vue';
+import pageSlider from 'root/components/page-slider.vue';
 export default {
   name: 'gallery',
   data () {
     return {
       galleryImages,
-      galleryPicture: ''
+      galleryPicture: '',
+      currentIndex: 0
+    }
+  },
+  computed: {
+    bigImages () {
+      return this.galleryImages.map(x => '/src/assets/img/gallery/' + x.pic);
     }
   },
   methods: {
     openModal (e) {
-      console.log(e);
-      this.galleryPicture = e.target.parentElement.href;
+      //console.log(e);
+      this.currentIndex = e.target.parentElement.getAttribute('data-index');
       this.eb.$emit('modal-open', {modalId: 'picture'})
     }
   },
@@ -45,7 +54,8 @@ export default {
     //console.log('galleryImages', galleryImages);
   },
   components: {
-    modalLayer
+    modalLayer,
+    pageSlider
   },
 }
 </script>

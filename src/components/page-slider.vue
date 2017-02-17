@@ -1,7 +1,7 @@
 <template>
   <div class="page-slider">
     <transition name="fade">
-      <img :src="images[index]" alt="" :key="index">
+      <img :src="images[innerIndex]" alt="" :key="innerIndex">
     </transition>
   </div>
 </template>
@@ -10,31 +10,37 @@
 
 export default {
   name: 'page-slider',
-  props: ['images'],
+  props: ['images', 'index', 'loop'],
   data () {
     return {
-      index: 0
+      innerIndex: 0,
     }
   },
   computed: {
-    imagesLength: function () {
+    imagesLength () {
       return this.images.length
     }
   },
   methods: {
-    loop () {
-      this.index = this.index < this.imagesLength - 1 
-      ? this.index + 1 
+    loopImages () {
+      //console.log('innerIndex', this.innerIndex);
+      this.innerIndex = this.innerIndex < this.imagesLength - 1 
+      ? this.innerIndex + 1 
       : 0;
     }
   },
   watch: {
-    index () {
+    index (x) {
+      this.innerIndex = x;
+    },
+    innerIndex (x) {
       this.$emit('index', this.index)
     }
   },
   created () {
-    setInterval(this.loop, 5000);
+    if (typeof this.loop === 'string'){
+      setInterval(this.loopImages, 5000);
+    }
   }
 }
 </script>
