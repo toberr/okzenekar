@@ -2,8 +2,11 @@
   <div class="inner gallery">
     <div class="frame">
       <template v-for="(item,index) in galleryImages">
-        <a :data-index="index" :href="'/src/assets/img/gallery/' + item.pic">
-          <img alt="" :src="'/src/assets/img/gallery/thumb/' + item.thumb">
+        <a 
+          :data-index="index" 
+          :href="'/src/assets/img/gallery/' + item.pic"
+          @click.prevent="openModal">
+          <img alt="" :src="'/src/assets/img/gallery/thumb/' + item.thumb" />
         </a> 
       </template>
     </div>
@@ -14,21 +17,36 @@
       <button class="close"></button>
       <div class="content"><img alt="" src=""></div>
     </div><!-- modal layer end -->
+    <modal-layer modal-id="picture">
+      <img alt="" :src="galleryPicture" />
+    </modal-layer>
   </div>
 </template>
 
 <script>
 import galleryImages from '../generated/gallery-images.json';
+import modalLayer from 'root/components/modal-layer.vue';
 export default {
   name: 'gallery',
   data () {
     return {
-      galleryImages
+      galleryImages,
+      galleryPicture: ''
+    }
+  },
+  methods: {
+    openModal (e) {
+      console.log(e);
+      this.galleryPicture = e.target.parentElement.href;
+      this.eb.$emit('modal-open', {modalId: 'picture'})
     }
   },
   created () {
-    console.log('galleryImages', galleryImages);
-  }
+    //console.log('galleryImages', galleryImages);
+  },
+  components: {
+    modalLayer
+  },
 }
 </script>
 
