@@ -28,6 +28,11 @@ export default {
       : 0;
     }
   },
+  watch: {
+    index () {
+      this.$emit('index', this.index)
+    }
+  },
   created () {
     setInterval(this.loop, 5000);
   }
