@@ -16,12 +16,12 @@ fileList.forEach(file => {
 
   while ((scripts = pattern.exec(content)) !== null){
     //console.log(scripts[0]);
-    result += scripts[0] + '\n';
+    result += scripts[0].replace('async=""', '') + '\n';
   }
 
   content = content
     .replace(pattern, '')
-    .replace('</body>', result + '</body>');
+    .replace('vendor.js"></script>', 'vendor.js"></script>\n  ' +  result);
   //console.log(content);
   fs.outputFileSync(file, content);
 });
