@@ -1,10 +1,12 @@
 <template>
   <div id="header">
-    <nav>
+    <button class="menu hide-for-large" @click="toggleMenu">menu</button>
+    <nav ref="nav" :show="show">
       <template v-for="route in routes">
-        <router-link :to="route.path" exact>{{route.data.linkName}}</router-link>
+        <router-link ref="links" :to="route.path" exact>{{route.data.linkName}}</router-link>
       </template>
     </nav>
+    <h1><span>O</span>k<span>z</span>enekar</h1>
   </div>
 </template>
 
@@ -14,8 +16,50 @@
     name: 'page-header',
     data () {
       return {
-        routes: routes
+        routes: routes,
+        show: false
       }
+    },
+    methods: {
+      getMenuHeight () {
+        return this.$refs.links
+          .map(x => x.$el.offsetHeight)
+          .reduce((a, b) => a + b, 0) + 'px';
+      },
+      showMenu () {
+        this.show = true;
+        //console.log('open');
+        this.$refs.nav.style.height = this.getMenuHeight();
+        setTimeout(() => {
+          this.$refs.nav.style.height = 'auto';
+        },300)
+      },
+      hideMenu () {
+        this.show = false;
+        //console.log('hide');
+        this.$refs.nav.style.height = this.getMenuHeight();
+        setTimeout(() => {
+          this.$refs.nav.style.height = '0px';
+        });
+        setTimeout(() => {
+          this.$refs.nav.style.height = '';
+        },300);
+      },
+      toggleMenu () {
+        this.show = !this.show;
+        if (this.show) {
+          this.showMenu();
+        } else {
+          this.hideMenu();
+        }
+      }
+    },
+    created () {
+      this.$router.afterEach(() => {
+        if (this.show&& window.innerWidth < 1024){
+          this.hideMenu();
+        }
+      });
     }
   }
 </script>
@@ -58,8 +102,8 @@
       overflow: hidden;
       height: 0;
       transition: height 0.3s;
-      &.router-link-active {
-        height: auto;
+      &[show] {
+         height: auto;
       }
       .sub {
         a:last-child {
