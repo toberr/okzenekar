@@ -32,14 +32,20 @@ export default {
   },
   methods: {
     change (mode) {
-      console.log(mode);
+      var temp;
+
       if (mode === 'next'){
-        var temp = this.galleryImages[this.currentIndex < this.galleryImages.length 
+        this.currentIndex = this.currentIndex < this.galleryImages.length -1
         ? this.currentIndex + 1
-        : 0]
-        this.currentIndex = this.currentIndex + 1;
-        this.currentImage = '/src/assets/img/gallery/' + temp.pic;
+        : 0;
+      } else {
+        this.currentIndex = this.currentIndex > 0 
+        ? this.currentIndex - 1
+        : this.galleryImages.length -1
       }
+
+      temp = this.galleryImages[this.currentIndex]
+      this.currentImage = '/src/assets/img/gallery/' + temp.pic;
     },
     openModal (e) {
       //console.log(e);
