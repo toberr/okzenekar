@@ -1,5 +1,5 @@
 <template>
-  <div class="page-slider">
+  <div class="img-cycle">
     <transition name="fade">
       <img :src="images[innerIndex]" alt="" :key="innerIndex">
     </transition>
@@ -9,7 +9,7 @@
 <script>
 
 export default {
-  name: 'page-slider',
+  name: 'img-cycle',
   props: ['images', 'index', 'loop'],
   data () {
     return {
@@ -53,7 +53,7 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0
 }
-.page-slider{
+.img-cycle{
   position: relative;
   padding-top: 232/350*100 + %;
   img {

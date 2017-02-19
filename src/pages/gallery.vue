@@ -10,17 +10,10 @@
         </a> 
       </template>
     </div>
-    <!-- modal layer start -->
-    <div class="layerContent" data-layer-content="picture">
-      <button class="prev">prev</button>
-      <button class="next">next</button>
-      <button class="close"></button>
-      <div class="content"><img alt="" src=""></div>
-    </div><!-- modal layer end -->
     <modal-layer modal-id="picture">
-      <page-slider 
-          :images="bigImages" 
-          :index="currentIndex"></page-slider>
+      <img v-if="currentImage" :src="currentImage" alt="" />
+      <button class="prev" @click="change('prev')">prev</button>
+      <button class="next" @click="change('next')">next</button>
     </modal-layer>
   </div>
 </template>
@@ -28,25 +21,30 @@
 <script>
 import galleryImages from '../generated/gallery-images.json';
 import modalLayer from 'root/components/modal-layer.vue';
-import pageSlider from 'root/components/page-slider.vue';
 export default {
   name: 'gallery',
   data () {
     return {
       galleryImages,
-      galleryPicture: '',
+      currentImage: '',
       currentIndex: 0
     }
   },
-  computed: {
-    bigImages () {
-      return this.galleryImages.map(x => '/src/assets/img/gallery/' + x.pic);
-    }
-  },
   methods: {
+    change (mode) {
+      console.log(mode);
+      if (mode === 'next'){
+        var temp = this.galleryImages[this.currentIndex < this.galleryImages.length 
+        ? this.currentIndex + 1
+        : 0]
+        this.currentIndex = this.currentIndex + 1;
+        this.currentImage = '/src/assets/img/gallery/' + temp.pic;
+      }
+    },
     openModal (e) {
       //console.log(e);
-      this.currentIndex = e.target.parentElement.getAttribute('data-index');
+      this.currentImage = e.target.parentElement.getAttribute('href');
+      this.currentIndex = e.target.parentElement.getAttribute('data-index') * 1;
       this.eb.$emit('modal-open', {modalId: 'picture'})
     }
   },
@@ -54,14 +52,14 @@ export default {
     //console.log('galleryImages', galleryImages);
   },
   components: {
-    modalLayer,
-    pageSlider
+    modalLayer
   },
 }
 </script>
 
 <style lang="scss">
 @import '~root/components/scss/_variables';
+@import '~root/components/scss/_mixins';
 .gallery {
   h2 {
     margin: 0 10px 20px;
@@ -100,6 +98,31 @@ export default {
           border-color: $blue;
         }
       }
+    }
+  }
+}
+
+div[modal-id="picture"]{
+  .prev, .next {
+    position: absolute;
+    @include centerY();
+    text-indent: -10000px;
+    overflow: hidden;
+    z-index: 2;
+    width: 20px;
+    height: 20px;
+    &.prev {
+      left: -20px;
+      border-top: 5px solid $gray;
+      border-left: 5px solid $gray;
+      @include rotate(-45);
+    }
+    &.next {
+      display: block;
+      right: -20px;
+      border-top: 5px solid $gray;
+      border-right: 5px solid $gray;
+      @include rotate(45);
     }
   }
 }

@@ -9,17 +9,17 @@
         Ha felkeltettük érdeklődéseteket, keressetek telefonon és <a href="mailto:okzenekar@gmail.com">emailen</a>.</p>
       </div>
       <div class="small-12 medium-6 large-6 columns">
-        <page-slider 
+        <img-cycle 
           :images="galleryImages" 
           :index="0"
-          loop ></page-slider>
+          loop ></img-cycle>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import pageSlider from 'root/components/page-slider.vue';
+import imgCycle from 'root/components/img-cycle.vue';
 export default {
   name: 'index',
   props: ['title'],
@@ -37,7 +37,7 @@ export default {
     });
   },
   components: {
-    pageSlider
+    imgCycle
   }
 }
 </script>
