@@ -11,7 +11,7 @@ var loadApi = new Promise (function (resolve, reject) {
   }
 
   window.onYouTubeIframeAPIReady = function() {
-    loaded = true,
+    loaded = true;
     resolve(window.YT);
   };
 

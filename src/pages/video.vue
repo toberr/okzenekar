@@ -28,8 +28,7 @@ export default {
       currentVideo: '',
       youtubeList:  [
       'NICuQWTwGzY', 'wvv5pSmR9js', '5lpjGYn1ZiQ', 'X0IqiCkKgZU', '4trrt0mNYII', '6BNHjraWWaU', 'IXwr8llcvbI', 'K79YLgI5nEU', 'GgGKv9fnKAE', 'Q-_EuyJhQas', 'GA7fRb_MeaU'
-      ],
-      videoList: youtube.videoList
+      ]
     }
   },
   methods: {

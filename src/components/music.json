@@ -1,0 +1,138 @@
+{
+  "songArray":{
+    "hungarian":[
+      {
+        "name":"Kicsit szomorkás / Kispál és a Borz ",
+        "mp3":"kicsitszomorkas.mp3"
+      },
+      {
+        "name":"Mond kis kócos / Komár László",
+        "mp3":"mond_kis_kocos.mp3"
+      },
+      {
+        "name":"Nézz az ég felé  / Charlie",
+        "mp3":"nezz_az_eg_fele.mp3"
+      },
+      {
+        "name":"Pálinka Dal / Magna Cum Laude",
+        "mp3":"palinkadal.mp3"
+      },
+      {
+        "name":"Részegen ki visz majd haza / Bikini",
+        "mp3":"reszegen.mp3"
+      },
+      {
+        "name":"Most múlik pontosan / Quimby",
+        "mp3":"mostmulik.mp3"
+      },
+      {
+        "name":"Vidéki sanzon / Magna Cum Laude",
+        "mp3":"Videkisanzon.mp3"
+      }
+    ],
+    "foreign":[
+      {
+        "name":"Besame Mucho / Latin",
+        "mp3":"boleros_besame mucho.mp3"
+      },
+      {
+        "name":"Crazy Little Thing Called Love / Queen",
+        "mp3":"crazy_little_thing_called_love.mp3"
+      },
+      {
+        "name":"Fly me to the moon / Frank Sinatra",
+        "mp3":"fly_me_to.mp3"
+      },
+      {
+        "name":"I want you / Elvis Presley",
+        "mp3":"I-WANT-YOU.mp3"
+      },
+      {
+        "name":"My Way Latin",
+        "mp3":"my_way_latin.mp3"
+      },
+      {
+        "name":"La Bamba / Ritchie Valens",
+        "mp3":"labamba.mp3"
+      },
+      {
+        "name":"Put Your Head On My Shoulder / Paul Anka",
+        "mp3":"put_your_head.mp3"
+      },
+      {
+        "name":"Quando / Engelbert Humperdinck",
+        "mp3":"Quando.mp3"
+      },
+      {
+        "name":"Una Lacrima Sul Viso / Bobby Solo",
+        "mp3":"una_lacrima_sul_viso.mp3"
+      },
+      {
+        "name":"Up / Olly Murs feat. Demi Lovato",
+        "mp3":"up-olly-murs.mp3"
+      },
+      {
+        "name":"Volare / Gipsy Kings",
+        "mp3":"volare.mp3"
+      }
+    ],
+    "instrument":[
+      {
+        "name":"Angol keringő - szaxofon",
+        "mp3":"angolkeringo.mp3"
+      },
+      {
+        "name":"Bicska Maxi - szaxofon",
+        "mp3":"bicskamaxi-szaxi.mp3"
+      },
+      {
+        "name":"Diximix - klarinét",
+        "mp3":"diximix-klarinet.mp3"
+      },
+      {
+        "name":"Feelings - Szaxofon",
+        "mp3":"feelings.mp3"
+      },
+      {
+        "name":"Szaxofon szóló",
+        "mp3":"szaxofon_szolo.mp3"
+      },
+      {
+        "name":"The Girl from Ipanema - szaxofon",
+        "mp3":"girl_from_ipanema_szaxofon.mp3"
+      },
+      {
+        "name":"The Last Waltz - harmónika",
+        "mp3":"the-last-waltz-harmonika.mp3"
+      },
+      {
+        "name":"Yakety Sax – szaxofon",
+        "mp3":"bennihill-szaxi.mp3"
+      }
+    ],
+    "mulatos":[
+      {
+        "name":"Egy asszony miatt",
+        "mp3":"egy_asszony_miatt.mp3"
+      },
+      {
+        "name":"Gyorscsárdás",
+        "mp3":"gyorcsardas.mp3"
+      },
+      {
+        "name":"Mulatós mix",
+        "mp3":"mulatos.mp3"
+      },
+      {
+        "name":"Umbala umba / Váradi Roma Café",
+        "mp3":"umbala_umba.mp3"
+      }
+    ]
+  },
+  "categoryNames":[
+    "Magyar",
+    "Külföldi",
+    "Instrumentális",
+    "Mulatós"
+  ]
+}

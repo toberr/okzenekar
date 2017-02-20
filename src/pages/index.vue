@@ -1,5 +1,5 @@
 <template>
-  <div class="inner">
+  <div class="inner index">
     <div class="row">
       <div class="small-12 medium-6 large-6 columns">
         <p>Örökzöld, retro, mulatós élőben, és igény szerint laptopról a legmodernebb zenék is.<br>
@@ -43,4 +43,5 @@ export default {
 </script>
 
 <style lang="scss">
+
 </style>

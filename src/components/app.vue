@@ -2,9 +2,9 @@
   <div id="app">
     <page-navigation @route-change="routeChange"></page-navigation>
     <page-header></page-header>
+    <page-audio></page-audio>
     <page-content :sub-title="subTitle"></page-content>
     <page-contact></page-contact>
-    <page-audio></page-audio>
   </div>
 </template>
 
