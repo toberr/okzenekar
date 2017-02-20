@@ -1,32 +1,52 @@
 <template>
   <div class="inner video">
     <div class="row">
-      <div class="small-6 medium-4 large-4 columns" v-for="(video, index) in youtubeList">
+      <div class="small-6 medium-4 large-4 columns" v-for="video in youtubeList">
         <a  :data-video-id="video" 
-            :href="'https://youtu.be/' + video" target="_blank">
-              <img alt="" :src="'http://img.youtube.com/vi/' + video + '/mqdefault.jpg'">
+            :href="'https://youtu.be/' + video" target="_blank"
+            @click="openModal">
+          <img alt="" :src="'http://img.youtube.com/vi/' + video + '/mqdefault.jpg'">
         </a>
-        <div class="videoStorage dn" :data-video-id="video"></div>
       </div>
-      <!-- modal layer start -->
-      <div class="layerContent" data-layer-content="video">
-        <button class="close"></button>
-        <div class="content"></div>
-      </div>
-      <!-- modal layer end -->
+      <modal-layer modal-id="video">
+        <div v-show="currentVideo === video" :video-id="video" v-for="(video, index) in youtubeList" :key="index">
+          <div class="insertPoint"></div>
+        </div>
+      </modal-layer>
     </div>
   </div>
 </template>
 
 <script>
+import modalLayer from 'root/components/modal-layer.vue';
+import youtube from 'root/components/youtube';
 export default {
   name: 'video',
   data () {
     return {
+      currentVideo: '',
       youtubeList:  [
       'NICuQWTwGzY', 'wvv5pSmR9js', '5lpjGYn1ZiQ', 'X0IqiCkKgZU', '4trrt0mNYII', '6BNHjraWWaU', 'IXwr8llcvbI', 'K79YLgI5nEU', 'GgGKv9fnKAE', 'Q-_EuyJhQas', 'GA7fRb_MeaU'
       ]
     }
+  },
+  methods: {
+    openModal (e) {
+      e.preventDefault();
+      this.currentVideo = e.target.nodeName === 'A' ? e.target.getAttribute('data-video-id') : e.target.parentElement.getAttribute('data-video-id');
+
+      youtube.loadApi.then(() => {
+        youtube.initVideo(this.currentVideo);
+      });
+
+      this.eb.$emit('modal-open', {modalId: 'video'})
+    }
+  },
+  mounted () {
+
+  },
+  components: {
+    modalLayer
   }
 }
 </script>

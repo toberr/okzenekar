@@ -19,11 +19,11 @@ export default {
   },
   methods: {
     openEvent (e) {
-      console.log('openEvent');
+      //console.log('openEvent');
       this.show = true;
     },
     closeEvent (e) {
-      console.log('closeEvent');
+      //console.log('closeEvent');
       this.show = false;
     },
     removeListeners () {
@@ -33,14 +33,14 @@ export default {
     addListeners () {
       this.eb.$on('modal-open', e => {
         if (e.modalId === this.modalId){
-          console.log('open modal with', this.modalId);
+          //console.log('open modal with', this.modalId);
           this.openEvent();
         }
       });
 
       this.eb.$on('modal-close', e => {
         if (e.modalId === this.modalId){
-          console.log('hide modal with', this.modalId);
+          //console.log('hide modal with', this.modalId);
           this.closeEvent();
         }
       });
