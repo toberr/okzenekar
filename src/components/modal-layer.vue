@@ -20,11 +20,12 @@ export default {
   methods: {
     openEvent (e) {
       //console.log('openEvent');
-      this.show = true;
+      this.eb.$emit('modal-open', {modalId: this.modalId})
+      
     },
     closeEvent (e) {
       //console.log('closeEvent');
-      this.show = false;
+      this.eb.$emit('modal-close', {modalId: this.modalId})
     },
     removeListeners () {
        this.eb.$off('modal-open');
@@ -34,14 +35,18 @@ export default {
       this.eb.$on('modal-open', e => {
         if (e.modalId === this.modalId){
           //console.log('open modal with', this.modalId);
-          this.openEvent();
+          this.eb.$emit('modal-open-before', {modalId: this.modalId})
+          this.show = true;
+          this.eb.$emit('modal-open-after', {modalId: this.modalId})
         }
       });
 
       this.eb.$on('modal-close', e => {
         if (e.modalId === this.modalId){
           //console.log('hide modal with', this.modalId);
-          this.closeEvent();
+          this.eb.$emit('modal-close-before', {modalId: this.modalId})
+          this.show = false;
+          this.eb.$emit('modal-close-after', {modalId: this.modalId})
         }
       });
     }

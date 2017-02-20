@@ -33,6 +33,13 @@ export default {
     }
   },
   methods: {
+    afterClose (e) {
+      //console.log('custom callback after layer closed', e);
+      Object.keys(this.initedVideos).forEach((video) =>{
+        //console.log(this.initedVideos[video]);
+        this.initedVideos[video].pauseVideo();
+      })
+    },
     openModal (e) {
       e.preventDefault();
       this.currentVideo = e.target.nodeName === 'A' ? e.target.getAttribute('data-video-id') : e.target.parentElement.getAttribute('data-video-id');
@@ -41,11 +48,14 @@ export default {
         youtube.initVideo(this.currentVideo, this.initedVideos);
       });
 
-      this.eb.$emit('modal-open', {modalId: 'video'})
+      this.eb.$emit('modal-open', {modalId: 'video', afterClose: this.afterClose})
     }
   },
   mounted () {
-    console.log(this.videoList);
+    this.eb.$on('modal-close-after', this.afterClose);
+  },
+  destroyed () {
+    this.eb.$off('modal-close-after');
   },
   components: {
     modalLayer
