@@ -10,7 +10,7 @@
         </a> 
       </template>
     </div>
-    <modal-layer modal-id="picture">
+    <modal-layer modal-id="picture" :key="'picture'">
       <img v-if="currentImage" :src="currentImage" alt="" />
       <button class="prev" @click="change('prev')">prev</button>
       <button class="next" @click="change('next')">next</button>

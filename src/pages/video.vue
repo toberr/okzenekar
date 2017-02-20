@@ -8,7 +8,7 @@
           <img alt="" :src="'http://img.youtube.com/vi/' + video + '/mqdefault.jpg'">
         </a>
       </div>
-      <modal-layer modal-id="video">
+      <modal-layer modal-id="video" :key="'video'">
         <div v-show="currentVideo === video" :video-id="video" v-for="(video, index) in youtubeList" :key="index">
           <div class="insertPoint"></div>
         </div>
@@ -24,10 +24,12 @@ export default {
   name: 'video',
   data () {
     return {
+      initedVideos: {},
       currentVideo: '',
       youtubeList:  [
       'NICuQWTwGzY', 'wvv5pSmR9js', '5lpjGYn1ZiQ', 'X0IqiCkKgZU', '4trrt0mNYII', '6BNHjraWWaU', 'IXwr8llcvbI', 'K79YLgI5nEU', 'GgGKv9fnKAE', 'Q-_EuyJhQas', 'GA7fRb_MeaU'
-      ]
+      ],
+      videoList: youtube.videoList
     }
   },
   methods: {
@@ -36,14 +38,14 @@ export default {
       this.currentVideo = e.target.nodeName === 'A' ? e.target.getAttribute('data-video-id') : e.target.parentElement.getAttribute('data-video-id');
 
       youtube.loadApi.then(() => {
-        youtube.initVideo(this.currentVideo);
+        youtube.initVideo(this.currentVideo, this.initedVideos);
       });
 
       this.eb.$emit('modal-open', {modalId: 'video'})
     }
   },
   mounted () {
-
+    console.log(this.videoList);
   },
   components: {
     modalLayer

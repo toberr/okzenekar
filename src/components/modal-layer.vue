@@ -46,13 +46,11 @@ export default {
       });
     }
   },
-  created () {
-    this.addListeners();
-  },
   mounted () {
     console.log('mounted');
     console.log(this.modalId);
-    
+
+    this.addListeners();
     this.$root.$el.appendChild(this.$el);
   },
   destroyed () {

@@ -1,5 +1,4 @@
 var loaded = false;
-var videoList = {};
 
 var loadApi = new Promise (function (resolve, reject) {
   if (!loaded){
@@ -21,10 +20,11 @@ var loadApi = new Promise (function (resolve, reject) {
   }
 })
 
-var initVideo = function(id) {
+var initVideo = function(id, initedVideos) {
   var container = document.querySelector('[video-id="' + id + '"] .insertPoint');
-  if (!videoList[id]) {
-    videoList[id] = new YT.Player(container, {
+  console.log('initedVideos', initedVideos);
+  if (!initedVideos[id]) {
+    initedVideos[id] = new YT.Player(container, {
       videoId: id,
       events: {
         'onReady': function() {
@@ -36,6 +36,5 @@ var initVideo = function(id) {
 
 module.exports = {
   loadApi,
-  initVideo,
-  videoList
+  initVideo
 }
