@@ -3,23 +3,23 @@
     <div class="inner">
       <div class="row">
         <div class="control">
-          <button class="prev"><span>prev</span></button>
+          <button class="prev" @click="prev"><span>prev</span></button>
           <button class="play-pause">
-            <span class="play">play</span>
-            <span class="pause">pause</span>
+            <span class="play" @click="playPause('play')">play</span>
+            <span class="pause" @click="playPause('pause')">pause</span>
           </button>
-          <button class="next"><span>next</span></button>
+          <button class="next" @click="next"><span>next</span></button>
           <div class="time">
-            <div class="line">
-              <div class="pointer"></div>
-              <div class="current"></div>
+            <div class="line" ref="positionContainer">
+              <div class="pointer" ref="positionPointer"></div>
+              <div class="current" ref="positionCurrent"></div>
             </div>
             <span class="now">00:00</span>
             <span class="decor">/</span>
             <span class="total">00:00</span>
           </div>
           <div class="volume">
-            <span class="speaker">
+            <span class="speaker" @click="speaker">
               <svg xml:space="preserve"
                   version="1"
                   id="speaker"
@@ -40,9 +40,9 @@
                   </g>
               </svg>
           </span>
-            <div class="line">
-              <div class="pointer"></div>
-              <div class="current"></div>
+            <div class="line" ref="volumeContainer">
+              <div class="pointer" ref="volumePointer"></div>
+              <div class="current" ref="volumeCurrent"></div>
             </div>
           </div>
         </div>
@@ -62,8 +62,11 @@
             v-for="(category, key, i) in music.songArray">
             <a 
               :href="'/src/assets/mp3/' + song.mp3" 
-              class="song" 
-              v-for="(song, k) in category">
+              class="song"
+              :data-category="key"
+              :data-index="k"
+              v-for="(song, k) in category"
+              @click="changeSong">
               {{song.name}}
             </a>
           </div>
@@ -75,6 +78,7 @@
 
 <script>
   import music from 'root/components/music.json';
+  import progressBar from 'root/components/progress-bar.js';
   export default {
     name: 'page-audio',
     data () {
@@ -87,10 +91,52 @@
     methods: {
       changeTab (index) {
         this.activeTab = index;
+      },
+      prev () {
+        console.log('prev');
+      },
+      next () {
+        console.log('next');
+      },
+      playPause () {
+        console.log('playPause');
+      },
+      pickSong () {
+        console.log('pickSong');
+      },
+      speaker () {
+        console.log('speaker');
+      },
+      volume () {
+        //console.log('this.$refs', this.$refs);
+        progressBar({
+          container: this.$refs.volumeContainer,
+          pointer: this.$refs.volumePointer,
+          current: this.$refs.volumeCurrent,
+          cb: function (percent) {
+            console.log(percent)
+          }
+        });
+      },
+      position () {
+        progressBar({
+          container: this.$refs.positionContainer,
+          pointer: this.$refs.positionPointer,
+          current: this.$refs.positionCurrent,
+          cb: function (percent) {
+            console.log(percent)
+          }
+        });
+      },
+      changeSong (e) {
+        e.preventDefault();
+        console.log('e', e.target);
       }
     },
     mounted () {
       console.log(this.music);
+      this.volume();
+      this.position();
     }
   }
 </script>
