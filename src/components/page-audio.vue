@@ -93,8 +93,8 @@
         activeSong: null,
         playing: false,
         duration: '00:00',
-        volume: 70,
-        lastVolume: 70, 
+        volume: 10,
+        lastVolume: 10, 
         now: '00:00',
         updateVolume: null,
         updatePosition: null
@@ -163,29 +163,17 @@
         this.duration = this.pad(minutes, 2) + ':' + this.pad(remainingSeconds, 2);
       },
       playPause () {
-        console.log('playPause');
-        this.playing = !this.playing
+        var song = this.getActiveSong();
+        this.playing = !this.playing;
+
+        if (this.activeSong){
+          this.activeSong.togglePause();
+        } else {
+          this.playSong(song);
+        }
       },
-      playSong (e) {
-        if (e.target) {
-          e.preventDefault();          
-        }
-        console.log('playSong');
-        var self = this,
-            song;
-
-        if (this.activeSong) {
-          this.activeSong.destruct();
-        }
-
-        this.playing = true;
-        this.activeSongIndex = e.songIndex || e.target.getAttribute('data-song-index') * 1;
-        this.activeCategory = e.category || e.target.getAttribute('data-category');
-        this.duration = null;
-
-        song = !e.target ? e : this.playList.filter(x => x.tabIndex === this.activeTabIndex && x.songIndex === this.activeSongIndex)[0];
-        //console.log('song', song);
-
+      createSong (song) {
+        var self = this;
         this.activeSong = soundManager.createSound({
           url: '/src/assets/mp3/' + song.mp3,
           whileloading: function() {
@@ -203,6 +191,26 @@
             self.next();
           }
         });
+      },
+      playSong (e) {
+        if (e.target) {
+          e.preventDefault();          
+        }
+        console.log('playSong');
+        var song;
+
+        if (this.activeSong) {
+          this.activeSong.destruct();
+        }
+
+        this.playing = true;
+        this.activeSongIndex = typeof e.songIndex === 'number' ? e.songIndex : e.target.getAttribute('data-song-index') * 1;
+        this.duration = null;
+
+        song = !e.target ? e : this.playList.filter(x => x.tabIndex === this.activeTabIndex && x.songIndex === this.activeSongIndex)[0];
+        console.log('song', song);
+
+        this.createSong(song);
 
         this.activeSong.play();
         this.activeSong.setVolume(this.volume);
