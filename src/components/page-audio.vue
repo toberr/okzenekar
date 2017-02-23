@@ -4,7 +4,7 @@
       <div class="row">
         <div class="control">
           <button class="prev" @click="prev"><span>prev</span></button>
-          <button class="play-pause">
+          <button class="play-pause" :class="{playing: playing}">
             <span class="play" @click="playPause('play')">play</span>
             <span class="pause" @click="playPause('pause')">pause</span>
           </button>
@@ -50,7 +50,7 @@
           <div class="tabLinks" >
             <button 
               class="tab"
-              :class="{active: activeTab === i}"
+              :class="{active: activeTabIndex === i}"
               v-for="(category, i) in music.categoryNames"
               @click="changeTab(i)">
               {{category}}
@@ -58,15 +58,16 @@
           </div>
           <div 
             class="tabContent" 
-            :class="{active: activeTab === i}"
+            :class="{active: activeTabIndex === i}"
             v-for="(category, key, i) in music.songArray">
             <a 
               :href="'/src/assets/mp3/' + song.mp3" 
               class="song"
+              :class="{active: activeSongIndex === k}"
               :data-category="key"
               :data-index="k"
               v-for="(song, k) in category"
-              @click="changeSong">
+              @click="playSong">
               {{song.name}}
             </a>
           </div>
@@ -77,20 +78,28 @@
 </template>
 
 <script>
+  import {soundManager} from 'soundmanager2';
   import music from 'root/components/music.json';
   import progressBar from 'root/components/progress-bar.js';
+
+  console.log('soundManager', soundManager);
   export default {
     name: 'page-audio',
     data () {
       return {
         music: music,
-        activeTab: 0,
-        activeSong: 4
+        activeTabIndex: 1,
+        activeCategory: null,
+        activeSongIndex: 1,
+        activeSong: null,
+        playing: false,
+        duration: null,
+        now: null,
       }
     },
     methods: {
       changeTab (index) {
-        this.activeTab = index;
+        this.activeTabIndex = index;
       },
       prev () {
         console.log('prev');
@@ -100,9 +109,47 @@
       },
       playPause () {
         console.log('playPause');
+        this.playing = !this.playing
       },
-      pickSong () {
-        console.log('pickSong');
+      playSong (e) {
+        e.preventDefault();
+        console.log('playSong');
+        var self = this,
+            song;
+
+        if (this.activeSong) {
+          this.activeSong.destruct();
+        }
+        this.playing = true;
+        this.activeSongIndex = e.target.getAttribute('data-index') * 1;
+        this.activeCategory = e.target.getAttribute('data-category');
+        this.duration = null;
+
+        song = this.music.songArray[this.activeCategory][this.activeSongIndex];
+
+        console.log('music', this.music.songArray[this.activeCategory][this.activeSongIndex]);
+
+        this.activeSong = soundManager.createSound({
+            url: '/src/assets/mp3/' + song.mp3
+            /*,
+            whileloading: function() {
+                if (this.duration !== self.duration) {
+                    self.duration = this.duration;
+                    updateDuration(self.duration);
+                }
+            },
+            whileplaying: function() {
+                self.now = this.position;
+                self.updateNow(self.now);
+                self.setPosition(Math.floor((self.now / self.duration) * 100))
+            },
+            onfinish: function () {
+                self.next();
+            }*/
+        });
+
+        console.log('this.activeSong', this.activeSong);
+
       },
       speaker () {
         console.log('speaker');
@@ -127,10 +174,6 @@
             console.log(percent)
           }
         });
-      },
-      changeSong (e) {
-        e.preventDefault();
-        console.log('e', e.target);
       }
     },
     mounted () {
