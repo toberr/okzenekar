@@ -147,20 +147,18 @@
         this.activeSongIndex = nextSong.songIndex;
         this.playSong(nextSong);
       },
-      updateNow (now) {
-        var seconds = Math.floor(now / 1000),
+      formatTime (time) {
+        var seconds = Math.floor(time / 1000),
             minutes = Math.floor(seconds / 60),
             remainingSeconds = seconds % 60;
 
-        this.now = this.pad(minutes, 2) + ':' + this.pad(remainingSeconds, 2);
+        return this.pad(minutes, 2) + ':' + this.pad(remainingSeconds, 2);
+      },
+      updateNow (now) {
+        this.now = this.formatTime(now);
       },
       updateDuration (duration) {
-        console.log('next');
-        var seconds = Math.floor(duration / 1000),
-            minutes = Math.floor(seconds / 60),
-            remainingSeconds = seconds % 60;
-
-        this.duration = this.pad(minutes, 2) + ':' + this.pad(remainingSeconds, 2);
+        this.duration = this.formatTime(duration);
       },
       playPause () {
         var song = this.getActiveSong();
