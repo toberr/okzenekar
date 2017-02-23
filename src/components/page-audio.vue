@@ -14,9 +14,9 @@
               <div class="pointer" ref="positionPointer"></div>
               <div class="current" ref="positionCurrent"></div>
             </div>
-            <span class="now">00:00</span>
+            <span class="now">{{now}}</span>
             <span class="decor">/</span>
-            <span class="total">00:00</span>
+            <span class="total">{{duration}}</span>
           </div>
           <div class="volume">
             <span class="speaker" @click="speaker">
@@ -65,7 +65,8 @@
               class="song"
               :class="{active: activeSongIndex === k}"
               :data-category="key"
-              :data-index="k"
+              :data-tab-index="i"
+              :data-song-index="k"
               v-for="(song, k) in category"
               @click="playSong">
               {{song.name}}
@@ -79,40 +80,96 @@
 
 <script>
   import {soundManager} from 'soundmanager2';
-  import music from 'root/components/music.json';
+  import music from 'root/data.json';
   import progressBar from 'root/components/progress-bar.js';
 
-  console.log('soundManager', soundManager);
   export default {
     name: 'page-audio',
     data () {
       return {
         music: music,
         activeTabIndex: 1,
-        activeCategory: null,
         activeSongIndex: 1,
         activeSong: null,
         playing: false,
-        duration: null,
-        now: null,
+        duration: '00:00',
+        volume: 70,
+        lastVolume: 70, 
+        now: '00:00',
+        updateVolume: null,
+        updatePosition: null
+      }
+    },
+    computed: {
+      playList: function () {
+        return Object.keys(music.songArray).reduce(function (acc, val, i) {
+          return acc.concat(music.songArray[val].map((x, j) => ({
+            mp3: x.mp3,
+            name: x.name,
+            category: val,
+            tabIndex: i,
+            songIndex: j
+          })));
+        }, [])
       }
     },
     methods: {
+      pad: function(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+      },
       changeTab (index) {
         this.activeTabIndex = index;
       },
+      getActiveSong () {
+        return this.playList.filter(x => {
+          return x.songIndex === this.activeSongIndex && x.tabIndex === this.activeTabIndex;
+        })[0]
+      },
       prev () {
-        console.log('prev');
+        var activeSong = this.getActiveSong(),
+            nextSong = this.playList.indexOf(activeSong) 
+            ? this.playList[this.playList.indexOf(activeSong) - 1] 
+            : this.playList[this.playList.length -1];
+
+        this.activeTabIndex = nextSong.tabIndex;
+        this.activeSongIndex = nextSong.songIndex;
+        this.playSong(nextSong);
       },
       next () {
+        var activeSong = this.getActiveSong(),
+            nextSong = this.playList.indexOf(activeSong) < this.playList.length -1
+            ? this.playList[this.playList.indexOf(activeSong) + 1] 
+            : this.playList[0];
+            
+        this.activeTabIndex = nextSong.tabIndex;
+        this.activeSongIndex = nextSong.songIndex;
+        this.playSong(nextSong);
+      },
+      updateNow (now) {
+        var seconds = Math.floor(now / 1000),
+            minutes = Math.floor(seconds / 60),
+            remainingSeconds = seconds % 60;
+
+        this.now = this.pad(minutes, 2) + ':' + this.pad(remainingSeconds, 2);
+      },
+      updateDuration (duration) {
         console.log('next');
+        var seconds = Math.floor(duration / 1000),
+            minutes = Math.floor(seconds / 60),
+            remainingSeconds = seconds % 60;
+
+        this.duration = this.pad(minutes, 2) + ':' + this.pad(remainingSeconds, 2);
       },
       playPause () {
         console.log('playPause');
         this.playing = !this.playing
       },
       playSong (e) {
-        e.preventDefault();
+        if (e.target) {
+          e.preventDefault();          
+        }
         console.log('playSong');
         var self = this,
             song;
@@ -120,66 +177,69 @@
         if (this.activeSong) {
           this.activeSong.destruct();
         }
+
         this.playing = true;
-        this.activeSongIndex = e.target.getAttribute('data-index') * 1;
-        this.activeCategory = e.target.getAttribute('data-category');
+        this.activeSongIndex = e.songIndex || e.target.getAttribute('data-song-index') * 1;
+        this.activeCategory = e.category || e.target.getAttribute('data-category');
         this.duration = null;
 
-        song = this.music.songArray[this.activeCategory][this.activeSongIndex];
-
-        console.log('music', this.music.songArray[this.activeCategory][this.activeSongIndex]);
+        song = !e.target ? e : this.playList.filter(x => x.tabIndex === this.activeTabIndex && x.songIndex === this.activeSongIndex)[0];
+        //console.log('song', song);
 
         this.activeSong = soundManager.createSound({
-            url: '/src/assets/mp3/' + song.mp3
-            /*,
-            whileloading: function() {
-                if (this.duration !== self.duration) {
-                    self.duration = this.duration;
-                    updateDuration(self.duration);
-                }
-            },
-            whileplaying: function() {
-                self.now = this.position;
-                self.updateNow(self.now);
-                self.setPosition(Math.floor((self.now / self.duration) * 100))
-            },
-            onfinish: function () {
-                self.next();
-            }*/
+          url: '/src/assets/mp3/' + song.mp3,
+          whileloading: function() {
+            if (this.duration !== self.duration) {
+              self.duration = this.duration;
+              self.updateDuration(self.duration);
+            }
+          },
+          whileplaying: function() {
+            self.now = this.position;
+            self.updateNow(self.now);
+            self.updatePosition(Math.floor((this.position / this.duration) * 100))
+          },
+          onfinish: function () {
+            self.next();
+          }
         });
 
-        console.log('this.activeSong', this.activeSong);
+        this.activeSong.play();
+        this.activeSong.setVolume(this.volume);
 
+        console.log('this.activeSong', this.activeSong);
       },
       speaker () {
         console.log('speaker');
       },
-      volume () {
+      setVolume () {
         //console.log('this.$refs', this.$refs);
-        progressBar({
+        return progressBar({
           container: this.$refs.volumeContainer,
           pointer: this.$refs.volumePointer,
           current: this.$refs.volumeCurrent,
           cb: function (percent) {
-            console.log(percent)
+            //console.log(percent)
           }
         });
       },
-      position () {
-        progressBar({
+      setPosition () {
+        return progressBar({
           container: this.$refs.positionContainer,
           pointer: this.$refs.positionPointer,
           current: this.$refs.positionCurrent,
           cb: function (percent) {
-            console.log(percent)
+            //console.log(percent)
           }
         });
       }
     },
     mounted () {
-      console.log(this.music);
-      this.volume();
-      this.position();
+      //console.log(this.music);
+      this.updateVolume = this.setVolume();
+      this.updatePosition = this.setPosition();
+
+      console.log('this.playList', this.playList);
     }
   }
 </script>
@@ -308,6 +368,7 @@
     }
     .total {
       margin-right: -10px;
+      min-width: 40px;
     }
     .line {
       position: relative;
