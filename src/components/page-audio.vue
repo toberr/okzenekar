@@ -4,9 +4,9 @@
       <div class="row">
         <div class="control">
           <button class="prev" @click="prev"><span>prev</span></button>
-          <button class="play-pause" :class="{playing: playing}">
-            <span class="play" @click="playPause('play')">play</span>
-            <span class="pause" @click="playPause('pause')">pause</span>
+          <button class="play-pause" :class="{playing: playing}" @click="playPause">
+            <span class="play">play</span>
+            <span class="pause">pause</span>
           </button>
           <button class="next" @click="next"><span>next</span></button>
           <div class="time">
@@ -19,7 +19,10 @@
             <span class="total">{{duration}}</span>
           </div>
           <div class="volume">
-            <span class="speaker" @click="speaker">
+            <span 
+              class="speaker" 
+              :class="{muted: muted}" 
+              @click="speaker">
               <svg xml:space="preserve"
                   version="1"
                   id="speaker"
@@ -88,16 +91,17 @@
     data () {
       return {
         music: music,
-        activeTabIndex: 1,
-        activeSongIndex: 1,
+        activeTabIndex: 0,
+        activeSongIndex: 4,
         activeSong: null,
         playing: false,
         duration: '00:00',
-        volume: 10,
-        lastVolume: 10, 
+        volume: 70,
+        lastVolume: 70, 
         now: '00:00',
         updateVolume: null,
-        updatePosition: null
+        updatePosition: null,
+        muted: false
       }
     },
     computed: {
@@ -206,36 +210,58 @@
         this.duration = null;
 
         song = !e.target ? e : this.playList.filter(x => x.tabIndex === this.activeTabIndex && x.songIndex === this.activeSongIndex)[0];
-        console.log('song', song);
+        //console.log('song', song);
 
         this.createSong(song);
 
         this.activeSong.play();
         this.activeSong.setVolume(this.volume);
 
-        console.log('this.activeSong', this.activeSong);
+        //console.log('this.activeSong', this.activeSong);
       },
       speaker () {
-        console.log('speaker');
+        //console.log('speaker');
+        if (this.volume){
+          this.lastVolume = this.volume;
+          this.volume = 0;
+          this.updateVolume(0);
+        } else {
+          this.volume = this.lastVolume;
+          this.updateVolume(this.volume);
+        }
+        this.muted = !this.muted;
+      },
+      logCalc (x) {
+        return Math.floor((Math.exp(x/100)-1)/(Math.E-1) * 100);
       },
       setVolume () {
         //console.log('this.$refs', this.$refs);
+        var self = this;
         return progressBar({
           container: this.$refs.volumeContainer,
           pointer: this.$refs.volumePointer,
           current: this.$refs.volumeCurrent,
           cb: function (percent) {
-            //console.log(percent)
+            //console.log(percent);
+            if (self.activeSong){
+                self.activeSong.setVolume(self.logCalc(percent));
+                self.volume = percent;
+            }
           }
         });
       },
       setPosition () {
+        var self = this;
         return progressBar({
           container: this.$refs.positionContainer,
           pointer: this.$refs.positionPointer,
           current: this.$refs.positionCurrent,
-          cb: function (percent) {
-            //console.log(percent)
+          cb: function (percent, type) {
+            //console.log(percent);
+            if (self.activeSong && type){
+              //console.log('in' , self.activeSong.duration);
+              self.activeSong.setPosition(self.activeSong.duration * percent / 100);
+            }
           }
         });
       }
@@ -244,8 +270,10 @@
       //console.log(this.music);
       this.updateVolume = this.setVolume();
       this.updatePosition = this.setPosition();
-
-      console.log('this.playList', this.playList);
+      soundManager.setup({
+        debugMode: process.env.NODE_ENV === 'production' ? false : true 
+      });
+      //console.log('this.playList', this.playList);
     }
   }
 </script>
@@ -411,6 +439,12 @@
     .volume {
       .line {
         width: 100px;
+        .pointer{
+          left: 70%;
+        }
+        .current{
+          width: 70%;
+        }
       }
     }
     .speaker {

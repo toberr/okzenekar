@@ -2,9 +2,9 @@
   <div id="app">
     <page-navigation @route-change="routeChange"></page-navigation>
     <page-header></page-header>
-    <page-audio></page-audio>
     <page-content :sub-title="subTitle"></page-content>
     <page-contact></page-contact>
+    <page-audio></page-audio>
   </div>
 </template>
 
@@ -26,11 +26,6 @@ export default {
     routeChange (e) {
       this.subTitle = e.data.linkName;
     }
-  },
-  created () {
-    this.eb.$on('test', function (data) {
-      console.log(data);
-    })
   },
   components: {
     pageNavigation,

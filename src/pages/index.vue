@@ -30,12 +30,6 @@ export default {
       ].map(x => `/src/assets/img/cycle/gallery_${x}.jpg`)
     }
   },
-  created () {
-  	console.log('index page created');
-  	this.eb.$emit('test', {
-      message: 'index triggered'
-    });
-  },
   components: {
     imgCycle
   }
