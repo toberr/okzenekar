@@ -3,7 +3,13 @@
     <button class="menu hide-for-large" @click="toggleMenu">menu</button>
     <nav ref="nav" :show="show">
       <template v-for="route in routes">
-        <router-link ref="links" :to="route.path" exact>{{route.data.linkName}}</router-link>
+        <router-link v-if="!route.sub" ref="links" :to="route.path" exact>{{route.data.linkName}}</router-link>
+        <div class="sub" v-else>
+          <span class="categoryTitle">{{route.sub}}</span>
+          <div class="categoryLinks">
+            <router-link v-for="subRoute in route.links" ref="links" :to="subRoute.path" exact>{{subRoute.data.linkName}}</router-link>
+          </div>
+        </div>
       </template>
     </nav>
     <h1><span>O</span>k<span>z</span>enekar</h1>
@@ -11,16 +17,41 @@
 </template>
 
 <script>
+
   import routes from '../router'
   export default {
     name: 'page-header',
     data () {
       return {
-        routes: routes,
+        routes: this.createSubCategories(routes.slice()),
         show: false
       }
     },
     methods: {
+      createSubCategories (routes) {
+        var temp = {};
+        routes.forEach(function (route, i) {
+          var c = route.data.category;
+          if (c && temp[c]){
+            route.i = i;
+            temp[c].push(route)
+          } else if (c && !temp[c]){
+            route.i = i;
+            temp[c] = [route]
+          }
+        });
+
+        Object.keys(temp).forEach(function (key) {
+          temp[key].forEach(function (route, i) {
+            routes.splice(route.i-i, 1);
+          });
+          routes.splice(temp[key][0].i, 0, {
+            sub: key,
+            links: temp[key]
+          })
+        });
+        return routes;
+      },
       getMenuHeight () {
         return this.$refs.links
           .map(x => x.$el.offsetHeight)

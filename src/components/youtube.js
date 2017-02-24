@@ -22,7 +22,7 @@ var loadApi = new Promise (function (resolve, reject) {
 
 var initVideo = function(id, initedVideos) {
   var container = document.querySelector('[video-id="' + id + '"] .insertPoint');
-  console.log('initedVideos', initedVideos);
+  //console.log('initedVideos', initedVideos);
   if (!initedVideos[id]) {
     initedVideos[id] = new YT.Player(container, {
       videoId: id,

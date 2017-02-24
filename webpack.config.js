@@ -120,7 +120,7 @@ if (PROD) {
       // List of routes to prerender
       routes.map(x => x.path),
       {
-        captureAfterTime: 5000,
+        captureAfterTime: 1000,
         captureAfterDocumentEvent: 'vue-post-render'
       }
     )

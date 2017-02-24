@@ -31,6 +31,7 @@ var routes = [
     path: '/article-party',
     component: articleParty,
     data: {
+      category: 'article',
       linkName: 'Lakodalmas Zenekar',
       metaDesc: 'Lakodalmas zenekar ismertető'
     }
@@ -39,6 +40,7 @@ var routes = [
     path: '/article-wedding',
     component: articleWedding,
     data: {
+      category: 'article',
       linkName: 'Zenekar esküvőre',
       metaDesc: 'Zenekar esküvőre ismertető'
     }

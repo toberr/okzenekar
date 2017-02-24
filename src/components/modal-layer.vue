@@ -52,8 +52,8 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted');
-    console.log(this.modalId);
+    //console.log('mounted');
+    //console.log(this.modalId);
 
     this.addListeners();
     this.$root.$el.appendChild(this.$el);
