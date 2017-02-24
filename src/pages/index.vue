@@ -37,5 +37,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+  @import '~root/components/scss/_variables';
+  @media #{$mobile} {
+    .index p{
+      margin-bottom: 10px;
+    }
+  }
 </style>

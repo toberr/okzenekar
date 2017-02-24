@@ -1,5 +1,5 @@
 <template>
-  <div class="inner">
+  <div class="inner about">
     <div class="row">
       <div class="small-12 medium-6 large-6 columns">
         <p>Mi, a zenekar tagjai gyermekkorunk óta zenélünk, tízen éves korunk óta játszunk tánczenét. Mind ketten igazi hangszeres zenészek vagyunk. Hangszereink: szintetizátor, harmonika, szaxofon, klarinét. Hangszereink mellett énekhangunkkal is jól bánunk.<br>
@@ -23,5 +23,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+  @import '~root/components/scss/_variables';
+ @media #{$mobile} {
+    .about p{
+      margin-bottom: 10px;
+    }
+  }
 </style>

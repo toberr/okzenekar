@@ -41,4 +41,8 @@ export default {
 @import '~root/components/scss/_variables';
 @import '~root/components/scss/_foundation';
 @import '~root/components/scss/_common';
+
+#app {
+  overflow: hidden;
+}
 </style>
