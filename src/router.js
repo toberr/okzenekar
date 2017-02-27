@@ -1,13 +1,13 @@
 var index = r => require.ensure([], () => r(require('./pages/index.vue')), 'index');
-var about = r => require.ensure([], () => r(require('./pages/about.vue')), 'about');
-var articleParty = r => require.ensure([], () => r(require('./pages/article-party.vue')), 'article-party');
-var articleWedding = r => require.ensure([], () => r(require('./pages/article-wedding.vue')), 'article-wedding');
-var downloads = r => require.ensure([], () => r(require('./pages/downloads.vue')), 'downloads');
-var gallery = r => require.ensure([], () => r(require('./pages/gallery.vue')), 'gallery');
-var opinions = r => require.ensure([], () => r(require('./pages/opinions.vue')), 'opinions');
-var partners = r => require.ensure([], () => r(require('./pages/partners.vue')), 'partners');
-var repertoire = r => require.ensure([], () => r(require('./pages/repertoire.vue')), 'repertoire');
-var video = r => require.ensure([], () => r(require('./pages/video.vue')), 'video');
+var about = r => require.ensure([], () => r(require('./pages/about.vue')), 'rolunk');
+var articleParty = r => require.ensure([], () => r(require('./pages/article-party.vue')), 'lakodalmas-zenekar');
+var articleWedding = r => require.ensure([], () => r(require('./pages/article-wedding.vue')), 'zenekar-eskuvore');
+var downloads = r => require.ensure([], () => r(require('./pages/downloads.vue')), 'letoltesek');
+var gallery = r => require.ensure([], () => r(require('./pages/gallery.vue')), 'galeria');
+var opinions = r => require.ensure([], () => r(require('./pages/opinions.vue')), 'video');
+var partners = r => require.ensure([], () => r(require('./pages/partners.vue')), 'partnereink');
+var repertoire = r => require.ensure([], () => r(require('./pages/repertoire.vue')), 'repertoar');
+var video = r => require.ensure([], () => r(require('./pages/video.vue')), 'velemenyek');
 
 var routes = [
   { 
@@ -19,7 +19,7 @@ var routes = [
     }
   },
   { 
-    path: '/about',
+    path: '/rolunk',
     component: about,
     data: {
       linkName: 'Rólunk',
@@ -28,7 +28,7 @@ var routes = [
   }
   ,
   { 
-    path: '/article-party',
+    path: '/lakodalmas-zenekar',
     component: articleParty,
     data: {
       category: 'article',
@@ -37,7 +37,7 @@ var routes = [
     }
   },
   { 
-    path: '/article-wedding',
+    path: '/zenekar-eskuvore',
     component: articleWedding,
     data: {
       category: 'article',
@@ -46,7 +46,7 @@ var routes = [
     }
   },
   { 
-    path: '/downloads',
+    path: '/letoltesek',
     component: downloads,
     data: {
       linkName: 'Letöltések',
@@ -54,7 +54,7 @@ var routes = [
     }
   },
   { 
-    path: '/gallery',
+    path: '/galeria',
     component: gallery,
     data: {
       linkName: 'Galéria',
@@ -70,7 +70,7 @@ var routes = [
     }
   },
   { 
-    path: '/partners',
+    path: '/partnereink',
     component: partners,
     data: {
       linkName: 'Partnereink',
@@ -78,7 +78,7 @@ var routes = [
     }
   },
   { 
-    path: '/repertoire',
+    path: '/repertoar',
     component: repertoire,
     data: {
       linkName: 'Repertoár',
@@ -86,7 +86,7 @@ var routes = [
     }
   },
   { 
-    path: '/opinions',
+    path: '/velemenyek',
     component: opinions,
     data: {
       linkName: 'Vélemények',
