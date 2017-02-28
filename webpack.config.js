@@ -27,7 +27,8 @@ module.exports = {
           loaders: {
             'scss': (() => PROD 
               ? ExtractTextPlugin.extract({
-                  loader: [
+                  fallback: 'vue-style-loader',
+                  use: [
                     {
                       loader: 'css-loader',
                       options: {
@@ -42,8 +43,7 @@ module.exports = {
                         sourceMapContents: true
                       }
                     }
-                  ],
-                  fallback: 'vue-style-loader'
+                  ]
                 })
               : [
                   'vue-style-loader',
