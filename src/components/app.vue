@@ -4,6 +4,10 @@
     <page-header></page-header>
     <page-content :sub-title="subTitle"></page-content>
     <page-contact></page-contact>
+    <page-video></page-video>
+    <template>
+      
+    </template>
     <page-audio></page-audio>
   </div>
 </template>
@@ -14,6 +18,7 @@ import pageHeader from 'root/components/page-header.vue';
 import pageContact from 'root/components/page-contact.vue';
 import pageContent from 'root/components/page-content.vue';
 import pageAudio from 'root/components/page-audio.vue';
+import pageVideo from 'root/components/page-video.vue';
 
 export default {
   name: 'app',
@@ -32,7 +37,8 @@ export default {
     pageHeader,
     pageContact,
     pageContent,
-    pageAudio
+    pageAudio,
+    pageVideo
   }
 }
 </script>

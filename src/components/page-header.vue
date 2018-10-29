@@ -179,6 +179,7 @@
       h1 {
         position: relative;
         margin: 20px 0;
+        margin-bottom: -65px;
         color: $black;
         font-size: 50px;
         letter-spacing: 2px;

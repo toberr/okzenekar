@@ -1,5 +1,4 @@
 var index = r => require.ensure([], () => r(require('./pages/index.vue')), 'index');
-var about = r => require.ensure([], () => r(require('./pages/about.vue')), 'rolunk');
 var articleParty = r => require.ensure([], () => r(require('./pages/article-party.vue')), 'lakodalmas-zenekar');
 var articleWedding = r => require.ensure([], () => r(require('./pages/article-wedding.vue')), 'zenekar-eskuvore');
 var downloads = r => require.ensure([], () => r(require('./pages/downloads.vue')), 'letoltesek');
@@ -19,19 +18,10 @@ var routes = [
     }
   },
   { 
-    path: '/rolunk',
-    component: about,
-    data: {
-      linkName: 'Rólunk',
-      metaDesc: 'Rólunk: Mi, a zenekar tagjai gyermekkorunk óta zenélünk, tízen éves korunk óta játszunk tánczenét. Mind ketten igazi hangszeres zenészek vagyunk. Hangszereink: szintetizátor, harmonika, szaxofon, klarinét. Hangszereink mellett énekhangunkkal is jól bánunk.'
-    }
-  }
-  ,
-  { 
     path: '/lakodalmas-zenekar',
     component: articleParty,
     data: {
-      category: 'article',
+      category: 'cikkek',
       linkName: 'Lakodalmas Zenekar',
       metaDesc: 'Lakodalmas zenekar ismertető'
     }
@@ -40,7 +30,7 @@ var routes = [
     path: '/zenekar-eskuvore',
     component: articleWedding,
     data: {
-      category: 'article',
+      category: 'cikkek',
       linkName: 'Zenekar esküvőre',
       metaDesc: 'Zenekar esküvőre ismertető'
     }
